@@ -145,28 +145,3 @@ GPU: 3 × NVIDIA RTX 3090 (24 GB each)
 OS: Ubuntu 20.04 LTS
 RAM: 125 GB
 Random seeds are fixed (torch, numpy, random) for deterministic behavior.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
