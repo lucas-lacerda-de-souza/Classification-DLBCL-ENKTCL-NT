@@ -13,7 +13,7 @@ multimodal_alexnet_patch_level.py	           │         Patch	    │          
 multimodal_alexnet_patient_level.py	           │        Patient	    │              Patient-level AlexNet classifier (mean pooled).
 multimodal_resnet50_patch_level.py	           │         Patch	    │          ResNet50 classifier integrating image patches + clinical data.
 multimodal_resnet50_patient_level.py	         │        Patient	    │        Aggregated patient-level inference based on ResNet50 outputs.
-multimodal_convnextxlarge_patch_level.py	     │         Patch	    │               ConvNeXt-XLarge multimodal fusion at patch level.
+multimodal_convnextxlarge_patch_level.py	   │         Patch	    │               ConvNeXt-XLarge multimodal fusion at patch level.
 multimodal_convnextxlarge_patient_level.py	   │        Patient	    │        ConvNeXt-XLarge patient-level prediction using aggregated patch probabilities.
 
 All multimodal models include:
