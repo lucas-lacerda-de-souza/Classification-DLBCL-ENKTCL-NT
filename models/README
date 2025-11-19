@@ -1,0 +1,30 @@
+📘 **Model Categories**
+**1. Multimodal Deep Learning**
+These scripts perform multimodal fusion between CNN features and clinical/morphometric embeddings for patch-level and patient-level classification.
+
+**Supported CNN Architectures**
+AlexNet
+ResNet50
+ConvNeXt-XLarge
+
+Scripts
+                **Script**	                   │       **Level**	  │                               **Description**
+multimodal_alexnet_patch_level.py	             │         Patch	    │          AlexNet-based multimodal fusion for patch-level prediction.
+multimodal_alexnet_patient_level.py	           │        Patient	    │              Patient-level AlexNet classifier (mean pooled).
+multimodal_resnet50_patch_level.py	           │         Patch	    │          ResNet50 classifier integrating image patches + clinical data.
+multimodal_resnet50_patient_level.py	         │        Patient	    │        Aggregated patient-level inference based on ResNet50 outputs.
+multimodal_convnextxlarge_patch_level.py	     │         Patch	    │               ConvNeXt-XLarge multimodal fusion at patch level.
+multimodal_convnextxlarge_patient_level.py	   │        Patient	    │        ConvNeXt-XLarge patient-level prediction using aggregated patch probabilities.
+
+All multimodal models include:
+Late fusion (CNN + MLP embeddings)
+Weighted cross-entropy for class imbalance
+ROC, AUC, PR curve, confusion matrix generation
+Patch-level and patient-level evaluation
+Multi-GPU support (torch.nn.DataParallel)
+
+**2. Image Segmentation**
+**Script	Description**
+segmentation_unet++.py	U-Net++ with attention for tissue segmentation and ROI extraction prior to patch generation.
+
+3. Classical Machine Learning
