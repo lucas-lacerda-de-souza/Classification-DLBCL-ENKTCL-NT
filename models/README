@@ -9,7 +9,7 @@ ConvNeXt-XLarge
 
 Scripts
                 Script    	                   │         Level	    │                                 Description
-multimodal_alexnet_patch_level.py	           │         Patch	    │          AlexNet-based multimodal fusion for patch-level prediction.
+multimodal_alexnet_patch_level.py	           │         Patch	    │              AlexNet-based multimodal for patch-level prediction.
 multimodal_alexnet_patient_level.py	           │        Patient	    │              Patient-level AlexNet classifier (mean pooled).
 multimodal_resnet50_patch_level.py	           │         Patch	    │          ResNet50 classifier integrating image patches + clinical data.
 multimodal_resnet50_patient_level.py	       │        Patient	    │        Aggregated patient-level inference based on ResNet50 outputs.
