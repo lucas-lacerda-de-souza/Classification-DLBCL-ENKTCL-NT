@@ -3,3 +3,116 @@
 DLBCL nuclei were significantly larger and more elongated than ENKTCL nuclei, with increased nuclear area (p < 0.0001), perimeter (p < 0.0001), and eccentricity (p = 0.0052). Circularity showed no significant difference (p = 0.1195). 
 Hematoxylin mean optical density was markedly higher in DLBCL (p < 0.0001), indicating stronger staining intensity.
 
+2. Traditional Machine Learning (Clinicopathological + Morphometric Features)
+XGBoost achieved:
+Accuracy: 0.829
+AUC: 0.945
+F1-score: 0.829
+Precision: 0.810
+Recall: 0.850
+SHAP analysis revealed age, nuclear area, and nuclear hematoxylin OD mean as the most influential features. These were integrated into the multimodal framework used for deep learning classification.
+
+3. Multimodal Patch-Level Classification
+Performance across architectures is summarised below.
+AlexNet
+Internal accuracy: 0.785
+External validation:
+EV1: 0.770
+EV2: 0.805
+
+AlexNet + Segmentation
+Internal accuracy: 0.820
+External validation:
+EV1: 0.765
+EV2: 0.805
+
+ResNet50
+Internal accuracy: 0.930
+External validation:
+EV1: 0.885
+EV2: 0.895
+
+ResNet50 + Segmentation
+Internal accuracy: 0.960
+External validation:
+EV1: 0.930
+EV2: 0.952** (highest overall)
+
+ConvNeXt-XLarge
+Internal accuracy: 0.875
+External validation:
+EV1: 0.860
+EV2: 0.885
+
+ConvNeXt-XLarge + Segmentation
+Internal accuracy: 0.915
+External validation:
+EV1: 0.885
+EV2: 0.901
+
+Overall best performer:
+👉 ResNet50 + Segmented Patches, achieving the strongest and most consistent performance across all datasets.
+
+4. Multimodal Patient-Level Analysis
+Across all architectures, integrating clinical and morphometric data improved robustness in external validation.
+
+Highlights:
+AlexNet
+Internal accuracy: 0.892
+EV2 accuracy: 0.906
+ROC AUC range: 0.866–0.928
+
+Segmentation-Enhanced AlexNet
+Internal accuracy: 0.880
+EV2 accuracy: 0.892
+ROC AUC range: 0.918–0.945
+
+ResNet50
+Internal accuracy: 0.924
+EV2 accuracy: 0.904
+ROC AUC range: 0.851–0.940
+
+ResNet50 + Segmentation
+Internal accuracy: 0.978
+EV2 accuracy: 0.933
+ROC AUC range: 0.911–0.976
+
+ConvNeXt-XLarge
+Internal accuracy: 0.893
+EV2 accuracy: 0.913
+ROC AUC range: 0.926–0.964
+
+ConvNeXt-XLarge + Segmentation
+Internal accuracy: 0.861
+EV2 accuracy: 0.869
+ROC AUC range: 0.873–0.911
+
+5. Grad-CAM Morphological Classification
+
+XGBoost trained on Grad-CAM–derived features:
+Training accuracy: 0.926
+Internal validation accuracy: 0.776
+External validation accuracy: 0.817
+External AUC: 0.847
+Results indicate good generalisation when applied to previously unseen Grad-CAM morphological profiles.
+
+6. Pathologist Benchmark
+Two expert pathologists evaluated the same cases:
+Pathologist 1
+Accuracy: 82.4%
+F1-score: 0.829
+
+Pathologist 2
+Accuracy: 86.1%
+F1-score: 0.854
+
+Agreement
+Interobserver κ = 0.668 (substantial agreement)
+κ vs reference:
+Pathologist 1: 0.648
+Pathologist 2: 0.722
+These results provide a clinical benchmark, showing that the best-performing models (especially ResNet50 + Segmentation) reach or exceed expert-level concordance.
+
+✅ Final Summary for GitHub
+This study demonstrates that integrating morphometric analysis, traditional ML, deep learning, and segmentation-enhanced multimodal pipelines provides highly accurate differentiation between DLBCL and ENKTCL. 
+The ResNet50 + segmented patches model achieved the best and most stable performance across all internal and external validations, surpassing standard CNN architectures and approaching expert-level diagnostic agreement.
