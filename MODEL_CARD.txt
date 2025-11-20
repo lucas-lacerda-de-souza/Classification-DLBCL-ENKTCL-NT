@@ -1,0 +1,192 @@
+🧠 Model Card — Multimodal AI for DLBCL vs ENKTCL-NT Classification
+1. Model Overview
+This repository provides a suite of deep learning, segmentation, and traditional machine learning models developed to classify Diffuse Large B-Cell Lymphoma (DLBCL) and Extranodal NK/T-Cell Lymphoma, 
+Nasal Type (ENKTCL-NT) from histopathological image patches, morphometric nuclear descriptors, and clinicopathological features.
+
+The multimodal system integrates:
+CNN-based patch classifiers:
+AlexNet, ResNet50, ConvNeXt-XLarge
+Segmentation-enhanced CNN variants using U-Net++ (to isolate diagnostically relevant nuclear regions)
+Traditional ML classifier (XGBoost) combining clinicopathologic and morphometric features
+Multimodal late-fusion patient-level classifiers combining deep learning predictions with structured features
+Explainability tools: Grad-CAM and SHAP
+The goal is to support pathologists in distinguishing between these two clinically aggressive lymphomas, which frequently overlap morphologically and contribute to diagnostic variability.
+
+2. Data Used
+Source and Composition
+136 whole-slide images (WSIs)
+68 DLBCL
+68 ENKTCL-NT
+Originating from multiple institutions, with two separate external validation cohorts.
+Patch Preparation
+Patch size: 299 × 299 pixels
+Magnification: 40×
+Patch overlap: 20% to preserve local context
+Ensured patient-level split to prevent data leakage.
+
+Segmentation
+U-Net++ with attention was used to remove background, necrosis, stroma, and artifacts, retaining only cellular areas with diagnostic value.
+
+Color Normalization
+Macenko normalization to mitigate staining and scanner variability across institutions.
+
+Data Augmentation
+Rotations (90°, 180°, 270°)
+Gaussian blur
+Applied only to internal training/validation, not external datasets.
+
+Clinical & Morphometric Variables
+Included:
+Age
+Hematoxylin mean optical density
+Nuclear area, perimeter, circularity, eccentricity
+Features with highest SHAP impact (>1.0) used in multimodal models.
+
+External Validation
+Two independent external cohorts:
+EV1: 13 cases
+EV2: 14 cases
+These were completely unseen during training.
+
+3. Model Performance Summary
+🧬 Morphometric Analysis
+DLBCL nuclei exhibited:
+Larger area (p < 0.0001)
+Greater perimeter (p < 0.0001)
+Higher eccentricity (p = 0.0052)
+
+ENKTCL-NT nuclei showed:
+Similar circularity (p = 0.1195)
+
+DLBCL also demonstrated:
+Significantly higher hematoxylin OD mean (p < 0.0001)
+These quantitative findings align with established descriptions of DLBCL as having large, pleomorphic, hyperchromatic nuclei, while ENKTCL-NT frequently displays variable nuclear morphology with necrosis and inflammation.
+
+🧮 Traditional Machine Learning (XGBoost)
+
+Performance with clinicopathological + morphometric features:
+Metric and Score
+Accuracy: 0.829
+AUC: 0.945 (0.950 by ROC)
+F1-score: 0.829
+Precision: 0.810
+Recall: 0.850
+
+SHAP Analysis — Top Predictors:
+Age (1.651)
+Nuclear area (1.264)
+Hematoxylin OD mean (1.248)
+These features were used in the multimodal fusion model.
+
+🧠 Deep Learning — Patch-Level Performance
+AlexNet
+Internal accuracy: 0.785
+EV1: 0.770, EV2: 0.805
+Consistent but limited performance reflecting architectural shallowness.
+
+AlexNet + Segmentation
+Internal accuracy: 0.820
+EV1: 0.765, EV2: 0.805
+Segmentation improved robustness and reduced noise.
+
+ResNet50
+Internal accuracy: 0.930
+EV1: 0.885, EV2: 0.895
+Strong performance and stable generalisation.
+
+ResNet50 + Segmentation
+Internal accuracy: 0.960
+EV1: 0.930, EV2: 0.952
+One of the highest-performing configurations.
+Cohen’s κ up to 0.904, indicating strong agreement.
+
+ConvNeXt-XLarge
+Internal accuracy: 0.875
+EV1: 0.860, EV2: 0.885
+
+ConvNeXt-XLarge + Segmentation
+Internal accuracy: 0.915
+EV1: 0.885, EV2: 0.901
+Strong balance of precision and recall across datasets.
+
+👩‍⚕️ Multimodal Patient-Level Models
+AlexNet multimodal
+Internal accuracy: 0.892
+EV1: 0.770
+EV2: 0.906
+
+Calibration remained strong (ECE 0.039–0.071)
+AlexNet + Segmentation multimodal
+Internal: 0.880
+EV1: 0.858
+EV2: 0.892
+
+ResNet50 multimodal
+Internal accuracy: 0.924
+EV1: 0.814
+EV2: 0.904
+
+ResNet50 + Segmentation multimodal
+Internal: 0.978
+EV1: 0.902
+EV2: 0.933
+Among the best-performing patient-level models
+
+ConvNeXt-XLarge multimodal
+Internal: 0.893
+EV1: 0.871
+EV2: 0.913
+
+ConvNeXt-XLarge + Segmentation multimodal
+Internal: 0.861
+EV1: 0.831
+EV2: 0.869
+
+Overall, segmentation-enhanced multimodal ResNet50 showed the highest accuracy, stability, and calibration across all datasets.
+
+Explainability — Grad-CAM and SHAP
+Grad-CAM Findings
+Highlighted large atypical cells, mitotic figures, angiocentric infiltration, and necrotic areas—the same features used by pathologists.
+Provided biologically meaningful activation maps across all CNN architectures.
+Grad-CAM-Based XGBoost
+Internal: F1 0.742
+External: F1 0.819
+AUC: 0.847
+Demonstrating that Grad-CAM can supply structured, diagnostically relevant features.
+
+
+4. Intended Use
+This model is intended for:
+Supporting differential diagnosis between DLBCL and ENKTCL-NT
+Enhancing triage, especially in low-resource settings
+Research and educational applications in computational pathology
+Morphological feature exploration via explainability methods
+Not for clinical deployment or autonomous diagnosis.
+
+5. Limitations
+Moderate sample size, despite external validation.
+Morphological heterogeneity may not fully represent global population diversity.
+Segmentation errors may propagate into classification.
+Patch-based inference cannot fully capture architectural patterns.
+No integration of immunophenotypic or molecular biomarkers.
+
+6. Potential Biases
+Geographic bias: data originates from specific regions where ENKTCL-NT prevalence differs.
+Institutional variability in staining protocols, scanners, and fixation.
+Sampling bias from ROIs focused on high-density tumor regions.
+Class balance maintained only at patient level; patch counts naturally differ.
+
+7. Ethical & Responsible AI Considerations
+Outputs are assistive and must not replace expert review.
+All data were anonymized and used in compliance with institutional approvals.
+Explainability (SHAP & Grad-CAM) enhances transparency.
+Further testing in diverse clinical environments is required.
+Intended for research only, not for diagnostic decision-making.
+
+
+
+
+
+
+
+
