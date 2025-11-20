@@ -87,13 +87,9 @@ Due to ethical restrictions and patient confidentiality, WSI datasets cannot be 
 Synthetic demo data and example patches are provided in the repository for running inference and testing the pipeline.
 
 • Code
-The full multimodal and segmentation framework is available on GitHub:
-(replace with your actual repo URL)
-https://github.com/lucas-lacerda-de-souza/DLBCL-vs-ENKTCL-Classification
+The full multimodal and segmentation framework is available on GitHub: https://github.com/lucas-lacerda-de-souza/Classification-DLBCL-ENKTCL-NT
 
 • Model Weights
-Pretrained models, segmentation weights, and multimodal checkpoints are deposited in Zenodo:
-(replace with your actual Zenodo DOI)
-https://doi.org/10.5281/zenodo.XXXXXXX
+Pretrained models, segmentation weights, and multimodal checkpoints are deposited in Zenodo: https://doi.org/10.5281/zenodo.17661989
 
 
