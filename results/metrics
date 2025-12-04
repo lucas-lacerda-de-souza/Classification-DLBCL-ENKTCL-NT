@@ -97,21 +97,25 @@ External AUC: 0.847
 Results indicate good generalisation when applied to previously unseen Grad-CAM morphological profiles.
 
 6. Pathologist Benchmark
+
 Two expert pathologists evaluated the same cases:
+
 Pathologist 1
-Accuracy: 82.4%
-F1-score: 0.829
+Accuracy: 65.4%
+F1-score: 0.704
 
 Pathologist 2
-Accuracy: 86.1%
-F1-score: 0.854
+Accuracy: 60.3%
+F1-score: 0.635
 
 Agreement
-Interobserver κ = 0.668 (substantial agreement)
-κ vs reference:
-Pathologist 1: 0.648
-Pathologist 2: 0.722
-These results provide a clinical benchmark, showing that the best-performing models (especially ResNet50 + Segmentation) reach or exceed expert-level concordance.
+Interobserver agreement was fair, with Cohen’s κ = 0.296 (95% CI: 0.135–0.458).
+Concordance with the reference diagnosis was also modest:
+• Pathologist 1: κ = 0.309
+• Pathologist 2: κ = 0.206
+
+These findings illustrate the inherent diagnostic difficulty of distinguishing DLBCL from ENKTCL-NT based solely on morphology. Notably, the best-performing AI models—particularly the 
+segmentation-enhanced ResNet50 and Grad-CAM-informed pipelines—surpassed expert-level accuracy and concordance, demonstrating their potential to provide robust diagnostic support in challenging lymphoma cases.
 
 ✅ Final Summary for GitHub
 This study demonstrates that integrating morphometric analysis, traditional ML, deep learning, and segmentation-enhanced multimodal pipelines provides highly accurate differentiation between DLBCL and ENKTCL. 
