@@ -10,7 +10,7 @@ Multimodal AI pipeline for classifying DLBCL vs. ENKTCL using three data streams
 ________________________________________
 **2. Pipeline**
 
-[Figure 1.TIF](https://github.com/user-attachments/files/24254620/Figure.1.TIF)
+<img width="2000" height="980" alt="image" src="https://github.com/user-attachments/assets/3023c80f-298f-46ef-a687-4ddd661b6947" />
 
 ________________________________________
 **3. Environment and Hardware**
