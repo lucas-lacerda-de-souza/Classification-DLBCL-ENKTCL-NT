@@ -87,6 +87,8 @@ ________________________________________
 
 •	GradCam
 
+Note: CellViT++ are established architectures. Their original implementations were used without architectural modification. Only inference, downstream analysis, and integration code are included in this repository.
+
 ________________________________________
 **6. Features Used**
 
