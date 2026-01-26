@@ -23,11 +23,47 @@ ROC, AUC, PR curve, confusion matrix generation
 Patch-level and patient-level evaluation
 Multi-GPU support (torch.nn.DataParallel)
 
-2. Image Segmentation
+2. Cell-Level Vision Transformers (CellViT++)
+🔎 Important note on implementation
+CellViT++ are established, peer-reviewed architectures.
+In this study, their original implementations were used without architectural modifications.
+
+For this reason:
+The full source code of CellViT++ is not redistributed in this repository
+Only wrapper scripts and downstream analysis pipelines are provided
+All hyperparameters and configurations used are fully documented below
+
+Purpose
+Nuclear segmentation
+Cell-level feature extraction
+Morphometric and appearance embeddings
+
+Hyperparameters and configuration
+Architecture: Vision Transformer–based (CellViT++)
+Input size: 256 × 256 pixels
+Magnification: 40×
+Pretraining: As provided in the original CellViT++ release
+
+Output:
+Binary nuclear masks
+Cell-level embeddings
+Morphometric descriptors (area, eccentricity, etc.)
+
+Mode: Inference only (no retraining)
+Framework: PyTorch
+Precision: Mixed precision (CUDA)
+
+Usage in this project
+Outputs from CellViT++ are used as inputs for:
+XGBoost models
+Cell Graph Neural Network (Cell-GNN)
+Multimodal learning pipelines
+
+3. Image Segmentation
 Script	Description
 segmentation_unet++.py	U-Net++ with attention for tissue segmentation and ROI extraction prior to patch generation.
 
-3. Classical Machine Learning
+4. Classical Machine Learning
 Script	Description
 xgboost_classification_cpc_mpa.R	XGBoost classifier trained on clinicopathologic and morphometric parameters.
 xgboost_classification_gradcam.R	XGBoost model trained on Grad-CAM-derived features for interpretability and cross-validation.
@@ -52,58 +88,7 @@ python xgboost_classification_gradcam.py \
   --input ./supplementary_data/supplementary_table_4.xlsx \
   --output ./results/xgboost_gradcam/
 
-📁 Output Structure
-results/
-
-├── resnet18_patch/
-
-│   ├── model.pth
-
-│   ├── metrics.csv
-
-│   ├── confusion_matrix.png
-
-│   ├── roc_curve.png
-
-│   └── pr_curve.png
-
-├── unetpp_segmentation/
-
-│   ├── masks/
-
-│   └── training_curves.png
-
-└── xgboost_gradcam/
-
-    ├── feature_importance.png
-
-    ├── shap_summary.png
-
-    └── performance_metrics.csv
-
-⚙️ Model Configuration and Training Details
-1. Traditional Machine Learning (XGBoost)
-Objective: Binary logistic regression
-Boosting rounds: 100
-Learning rate: 0.1
-Maximum tree depth: 6
-Train/test split: 70% / 30%
-Evaluation metrics: Accuracy, AUC, F1-score, Precision, Recall
-Feature interpretability: SHAP (p > 0.1)
-
-2. Nuclear Segmentation (U-Net++)
-Architecture: U-Net++ with attention gates
-Framework: PyTorch
-Input size: 256 × 256 pixels
-Training: NuInsSeg (665 images, ~30,000 annotated nuclei)
-Data split: 80% training / 10% validation / 10% test
-Optimizer: Adam (learning rate = 1 × 10⁻⁴)
-Loss function: Binary Cross-Entropy with Logits
-Batch size: 4
-Epochs: 50
-Precision mode: Mixed (CUDA acceleration)
-
-3. Patch Generation and Pre-processing
+5. Patch Generation and Pre-processing
 Patch size: 299 × 299 pixels
 Patch overlap: 20%
 Color normalization: Macenko method
@@ -128,7 +113,7 @@ External 2 (14 cases)
 6 Class 1 → 7,004 patches
 8 Class 2 → 7,413 patches
 
-4. Multimodal Deep Learning (CNN + MLP Fusion)
+6. Multimodal Deep Learning (CNN + MLP Fusion)
 Backbones: AlexNet, ResNet50 and ConvNeXt-XLarge (ImageNet pretrained)
 Fusion strategy: Late fusion (concatenation of CNN and MLP embeddings)
 MLP branch: Fully connected layers with ReLU activation and dropout regularization
