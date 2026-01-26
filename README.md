@@ -11,7 +11,8 @@ ________________________________________
 **2. Pipeline**
 
 
-![Figure 1](https://github.com/user-attachments/assets/9cc5213a-19da-4221-bbd7-069f4b47a5c0)
+<img width="1109" height="828" alt="Figure 1" src="https://github.com/user-attachments/assets/f8d41bce-d94e-472d-a172-8d9dd902477f" />
+
 
 
 ________________________________________
