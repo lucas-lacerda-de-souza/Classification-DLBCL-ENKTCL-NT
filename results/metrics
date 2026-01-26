@@ -87,7 +87,22 @@ Internal accuracy: 0.861
 EV2 accuracy: 0.869
 ROC AUC range: 0.873–0.911
 
-5. Grad-CAM Morphological Classification
+5. Vision Transformer Performance (CellViT++)
+
+The CellViT++ architecture demonstrated consistently high performance in nuclear segmentation, with Dice and IoU values exceeding 0.95 across all cohorts.
+In classification tasks:
+
+Patch-level accuracy: 94.3%
+
+Patch-level ROC AUC: 0.96 (95% CI: 0.86–0.99)
+
+Patient-level accuracy: 92.1%
+
+Patient-level ROC AUC: 0.96 (95% CI: 0.91–0.98)
+
+Calibration analysis showed reliable probability estimates (ECE = 0.07; Brier score = 0.05).
+
+6. Grad-CAM Morphological Classification
 
 XGBoost trained on Grad-CAM–derived features:
 Training accuracy: 0.926
@@ -96,26 +111,35 @@ External validation accuracy: 0.817
 External AUC: 0.847
 Results indicate good generalisation when applied to previously unseen Grad-CAM morphological profiles.
 
-6. Pathologist Benchmark
+7. Pathologist Benchmark
 
-Two expert pathologists evaluated the same cases:
+Three pathologists independently evaluated the same cases using H&E-stained whole-slide images.
 
-Pathologist 1
+Pathologist 1 (haematopathologist):
+
+Accuracy: 91.2%
+
+F1-score: 0.905
+
+Cohen’s κ vs reference: 0.824
+
+Pathologist 2:
+
 Accuracy: 65.4%
-F1-score: 0.704
 
-Pathologist 2
+F1-score: 0.584
+
+Cohen’s κ vs reference: 0.309
+
+Pathologist 3:
+
 Accuracy: 60.3%
-F1-score: 0.635
 
-Agreement
-Interobserver agreement was fair, with Cohen’s κ = 0.296 (95% CI: 0.135–0.458).
-Concordance with the reference diagnosis was also modest:
-• Pathologist 1: κ = 0.309
-• Pathologist 2: κ = 0.206
+F1-score: 0.565
 
-These findings illustrate the inherent diagnostic difficulty of distinguishing DLBCL from ENKTCL-NT based solely on morphology. Notably, the best-performing AI models—particularly the 
-segmentation-enhanced ResNet50 and Grad-CAM-informed pipelines—surpassed expert-level accuracy and concordance, demonstrating their potential to provide robust diagnostic support in challenging lymphoma cases.
+Cohen’s κ vs reference: 0.206
+
+Interobserver agreement among non-senior readers was fair (κ = 0.296), highlighting substantial diagnostic variability when relying on morphology alone.
 
 ✅ Final Summary for GitHub
 This study demonstrates that integrating morphometric analysis, traditional ML, deep learning, and segmentation-enhanced multimodal pipelines provides highly accurate differentiation between DLBCL and ENKTCL. 
