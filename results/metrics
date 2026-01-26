@@ -91,15 +91,10 @@ ROC AUC range: 0.873–0.911
 
 The CellViT++ architecture demonstrated consistently high performance in nuclear segmentation, with Dice and IoU values exceeding 0.95 across all cohorts.
 In classification tasks:
-
 Patch-level accuracy: 94.3%
-
 Patch-level ROC AUC: 0.96 (95% CI: 0.86–0.99)
-
 Patient-level accuracy: 92.1%
-
 Patient-level ROC AUC: 0.96 (95% CI: 0.91–0.98)
-
 Calibration analysis showed reliable probability estimates (ECE = 0.07; Brier score = 0.05).
 
 6. Grad-CAM Morphological Classification
@@ -116,27 +111,18 @@ Results indicate good generalisation when applied to previously unseen Grad-CAM 
 Three pathologists independently evaluated the same cases using H&E-stained whole-slide images.
 
 Pathologist 1 (haematopathologist):
-
 Accuracy: 91.2%
-
 F1-score: 0.905
-
 Cohen’s κ vs reference: 0.824
 
 Pathologist 2:
-
 Accuracy: 65.4%
-
 F1-score: 0.584
-
 Cohen’s κ vs reference: 0.309
 
 Pathologist 3:
-
 Accuracy: 60.3%
-
 F1-score: 0.565
-
 Cohen’s κ vs reference: 0.206
 
 Interobserver agreement among non-senior readers was fair (κ = 0.296), highlighting substantial diagnostic variability when relying on morphology alone.
