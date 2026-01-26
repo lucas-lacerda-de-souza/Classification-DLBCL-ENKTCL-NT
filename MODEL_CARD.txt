@@ -147,7 +147,6 @@ EV2: 0.869
 Overall, segmentation-enhanced multimodal ResNet50 showed the highest accuracy, stability, and calibration across all datasets.
 
 🧠 Vision Transformer — CellViT++
-
 The CellViT++ architecture demonstrated consistently high performance in nuclear segmentation tasks, with Dice and Intersection-over-Union (IoU) values exceeding 0.95 across all evaluated cohorts.  
 Beyond segmentation, CellViT++ achieved strong discriminative performance in classification tasks. At the patch level, the model reached an accuracy of 94.3% with a ROC AUC of 0.96 (95% CI: 0.86–0.99). When evaluated at the patient level, CellViT++ achieved an accuracy of 92.1%, with sensitivity of 92.8%, specificity of 91.5%, and a ROC AUC of 0.96 (95% CI: 0.91–0.98).  
 Calibration analysis indicated reliable probability estimates, with a low expected calibration error (ECE = 0.07) and a Brier score of 0.05. These results indicate that attention-based vision transformer architectures can effectively capture heterogeneous nuclear patterns while maintaining stable calibration, supporting their suitability for integrated computational pathology workflows.
