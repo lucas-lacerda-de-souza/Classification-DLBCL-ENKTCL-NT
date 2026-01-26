@@ -6,7 +6,8 @@ Year: 2025
 ________________________________________
 **1. Project Overview**
 
-Multimodal AI pipeline for classifying DLBCL vs. ENKTCL using three data streams: (1) histopathology patches processed with CNN + MLP fusion, (2) structured clinicopathologic data, and (3) morphometric nuclear features evaluated with XGBoost + SHAP. Interpretability is provided through Grad-CAM and SHAP-based explanations.
+Multimodal AI pipeline for classifying Diffuse Large B Cell Lymphoma (DLBCL) and Extranodal Natural Killet T Cell Lymphoma, Nasal Type (ENKTCL-NT) using histopathological image patches, clinicopathological data, and nuclear morphometric features. The pipeline combines: Traditional machine learning (XGBoost with SHAP), Deep learning (CNNs + multilayer perceptron), Vision Transformer–based cell modelling (CellViT++), Explainable AI methods (Grad-CAM and SHAP).
+
 ________________________________________
 **2. Pipeline**
 
@@ -82,24 +83,29 @@ ________________________________________
 
 •	ConvNeXt-XLarge + Multilayer perceptron
 
+•	CellViT++
+
 •	GradCam
 
 ________________________________________
 **6. Features Used**
 
-• Patches (H&E)
+• H&E image patches (299 × 299 pixels, 20×)
 
-• Patches (Unet++)
-   
-•	Morphometric features (nucleus-based)
+• Segmented patches (U-Net++)
 
-•	Clinicopathologic features (age, sex, location)
+• Cell-level embeddings and nuclear masks (CellViT++)
+
+• Nucleus-based morphometric features
+
+• Clinicopathological features (age, sex, lesion location)
+
 ________________________________________
 **7. Evaluation Metrics**
    
 •	XGBoost + SHAP – Classification (accuracy, area under the curve (AUC), F1-score, precision, recall and SHAP).
 
-•	U-Net++ (Loss, Accuracy, Precision, Recall, IoU and Dice coefficient).
+•	U-Net++/CellVit++ (Loss, Accuracy, Precision, Recall, IoU and Dice coefficient).
 
 •	AlexNet (Loss, Accuracy, Precision, Recall, Confusion matrix (TP, FN, FP, TN), F1-score, Specificity, Receiver operating characteristic – area under the curve (ROC AUC) and Cohen's Kappa).
 
@@ -110,116 +116,53 @@ ________________________________________
 •	GradCam - XGBoost - Classification (accuracy, area under the curve (AUC), F1-score, precision, recall). 
 
 ________________________________________
+
 **8. Repository Structure**
    
 ## 📂 Repository Structure
+
+DATA - Data used in the training
+
+MODELS - Models used in the study
+
+RESULTS - Results of the study
 
 INFERENCE.py — Inference Script Example
 
 LICENSE.txt — Project license
 
-MODEL_CARD.txt — Description of the essential information of the study 
+MODEL_CARD.txt — Description of the essential information of the study
 
 README.md — Documentation and usage instructions
 
 REQUIREMENTS.txt — Dependencies
 
-
-data/
-
-patches/
-
- ├── gradcam/
- 
- │ ├── heatmaps/
- 
- │ │ └── heatmap.png files
- 
- │ └── patches/
- 
- │  └── patch.png files
-
- │ └── wsi_heatmaps/
- 
- │  └── wsi.png files
- 
- ├── masks/
- 
- │ ├── train/
- 
- │ ├── val/
- 
- │ └── test/
- 
- │  └── mask.png files
- 
- └── patches/
- 
-  ├── train/
-  
-  ├── val/
-  
-  └── test/
-  
-   └── patch.png files
-   
- models/
-
- ├── multimodal_alexnet_patch_level.py
- 
- ├── multimodal_alexnet_patient_level.py
- 
- ├── multimodal_resnet50_patch_level.py
- 
- ├── multimodal_resnet50_patient_level.py
- 
- ├── multimodal_convnextxlarge_patch_level.py
- 
- ├── multimodal_convnextxlarge_patient_level.py
- 
- ├── segmentation_unet++.py
- 
- ├── xgboost_classification_cpc_mpa.R
- 
- └── xgboost_classification_gradcam.R
-
-results/
-
- └── metrics
-
 ________________________________________
 
-**9. Run models and reproduce tables**
-
-
-<img width="1600" height="461" alt="image" src="https://github.com/user-attachments/assets/55947105-cc63-412c-a4f8-fdf211b23c22" />
-
-________________________________________
-
-**10. Installation**
+**9. Installation**
 
 git clone https://github.com/lucas-lacerda-de-souza/Classification-DLBCL-ENKTCL-NT.git
 cd Classification-DLBCL-ENKTCL-NT
 
 ________________________________________
 
-**11. Quick Start Guide**
+**10. Quick Start Guide**
 
-**11.1. Clone the repository**
+**10.1. Clone the repository**
 
 git clone https://github.com/lucas-lacerda-de-souza/Classification-DLBCL-ENKTCL-NT.git
 cd Classification-DLBCL-ENKTCL-NT
 
-**11.2. Create and activate the environment**
+**10.2. Create and activate the environment**
 
 conda env create -f environment.yml
 conda activate dlbcl-enktcl-ai
 
-**11.3. Run inference**
+**10.3. Run inference**
 
 python inference.py --input_dir ./data/test/ --output_dir ./results/
 
-**11.4. Generate Grad-CAM heatmaps**
+**10.4. Generate Grad-CAM heatmaps**
 
 python scripts/visualize_gradcam.py \
   --model resnet50 \
@@ -227,7 +170,7 @@ python scripts/visualize_gradcam.py \
   --output_dir ./gradcam/heatmaps/
 ________________________________________
 
-**12. Compliance with TRIPOD-AI and CLAIM 2024 Guidelines**
+**11. Compliance with TRIPOD-AI and CLAIM 2024 Guidelines**
 
 This repository has been structured to meet the TRIPOD-AI (Transparent Reporting of a multivariable prediction model for Individual Prognosis Or Diagnosis – 
 AI extension) and CLAIM 2024 (Checklist for Artificial Intelligence in Medical Imaging) requirements for transparent and reproducible AI in healthcare.
@@ -270,7 +213,7 @@ Model not intended for autonomous clinical use; human oversight required at all 
 
 ________________________________________
 
-**13. Ethics**
+**12. Ethics**
 
 This study was approved by the Ethics Committee of the Piracicaba Dental School, University of Campinas, Piracicaba, Brazil (protocol no. 67064422.9.1001.5418), 
 and by the West of Scotland Research Ethics Service (20/WS/0017). The study was performed according to the clinical standards of the 1975 and 1983 Declaration of Helsinki. 
@@ -278,26 +221,26 @@ Written consent was not required as data was collected from surplus archived tis
 
 ________________________________________
 
-**14. Data availability**
+**13. Data availability**
 
 All the data derived from this study are included in the manuscript. We are unable to share the whole slide images and clinical data, due to restrictions in the 
 ethics applications. However, we created synthetic slides to show the structure of the project.
 
 ________________________________________
 
-**15. Code availability**
+**14. Code availability**
 
 We have made the codes publicly available online, along with model weights ([https://github.com/lucas-lacerda-de-souza/Classification-RFH-and-FL](https://github.com/lucas-lacerda-de-souza/Classification-DLBCL-ENKTCL-NT)). All code was written 
 with Python Python 3.12.11, along with PyTorch 2.8.0. The full implementation of the model, including the code and documentation, has been deposited in the Zenodo repository 
 and is publicly available (https://doi.org/10.5281/zenodo.17661989). 
 
 ________________________________________
-**16. Citation**
+**15. Citation**
 
 @article{delasouza2025classification,
   title={Computationally Explainable Multimodal Deep Learning for Discriminative Histopathological Classification of Head and Neck B-Cell and T-Cell Lymphomas},
   author={Souza, Lucas Lacerda de, Chen, Zhiyang […] Khurram, Syed Ali and Vargas, Pablo Agustin},
-  journal={(npj digital medicine / 2025)},
+  journal={(journal/ 2025)},
   year={2025}
 }
 ________________________________________
