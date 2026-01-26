@@ -9,6 +9,7 @@ AlexNet, ResNet50, ConvNeXt-XLarge
 Segmentation-enhanced CNN variants using U-Net++ (to isolate diagnostically relevant nuclear regions)
 Traditional ML classifier (XGBoost) combining clinicopathologic and morphometric features
 Multimodal late-fusion patient-level classifiers combining deep learning predictions with structured features
+Vision transformer–based architecture (CellViT++) for joint nuclear segmentation and classification.
 Explainability tools: Grad-CAM and SHAP
 The goal is to support pathologists in distinguishing between these two clinically aggressive lymphomas, which frequently overlap morphologically and contribute to diagnostic variability.
 
@@ -26,6 +27,7 @@ Ensured patient-level split to prevent data leakage.
 
 Segmentation
 U-Net++ with attention was used to remove background, necrosis, stroma, and artifacts, retaining only cellular areas with diagnostic value.
+In addition to CNN-based segmentation, a vision transformer–based model (CellViT++) was employed to perform joint nuclear segmentation and classification, enabling simultaneous modelling of fine-grained nuclear morphology and long-range contextual dependencies within histological patches.
 
 Color Normalization
 Macenko normalization to mitigate staining and scanner variability across institutions.
@@ -144,6 +146,14 @@ EV2: 0.869
 
 Overall, segmentation-enhanced multimodal ResNet50 showed the highest accuracy, stability, and calibration across all datasets.
 
+🧠 Vision Transformer — CellViT++
+
+The CellViT++ architecture demonstrated consistently high performance in nuclear segmentation tasks, with Dice and Intersection-over-Union (IoU) values exceeding 0.95 across all evaluated cohorts.  
+
+Beyond segmentation, CellViT++ achieved strong discriminative performance in classification tasks. At the patch level, the model reached an accuracy of 94.3% with a ROC AUC of 0.96 (95% CI: 0.86–0.99). When evaluated at the patient level, CellViT++ achieved an accuracy of 92.1%, with sensitivity of 92.8%, specificity of 91.5%, and a ROC AUC of 0.96 (95% CI: 0.91–0.98).  
+
+Calibration analysis indicated reliable probability estimates, with a low expected calibration error (ECE = 0.07) and a Brier score of 0.05. These results indicate that attention-based vision transformer architectures can effectively capture heterogeneous nuclear patterns while maintaining stable calibration, supporting their suitability for integrated computational pathology workflows.
+
 Explainability — Grad-CAM and SHAP
 Grad-CAM Findings
 Highlighted large atypical cells, mitotic figures, angiocentric infiltration, and necrotic areas—the same features used by pathologists.
@@ -153,7 +163,7 @@ Internal: F1 0.742
 External: F1 0.819
 AUC: 0.847
 Demonstrating that Grad-CAM can supply structured, diagnostically relevant features.
-
+For the CellViT++ architecture, attention mechanisms inherently provided spatial interpretability by modelling long-range contextual dependencies, complementing gradient-based explainability methods applied to CNN-based models.
 
 4. Intended Use
 This model is intended for:
@@ -162,6 +172,7 @@ Enhancing triage, especially in low-resource settings
 Research and educational applications in computational pathology
 Morphological feature exploration via explainability methods
 Not for clinical deployment or autonomous diagnosis.
+Although CellViT++ demonstrated strong performance, its use remains restricted to research and decision-support contexts and should not be interpreted as a replacement for expert pathological assessment.
 
 5. Limitations
 Moderate sample size, despite external validation.
@@ -169,6 +180,7 @@ Morphological heterogeneity may not fully represent global population diversity.
 Segmentation errors may propagate into classification.
 Patch-based inference cannot fully capture architectural patterns.
 No integration of immunophenotypic or molecular biomarkers.
+Vision transformer models such as CellViT++ require higher computational resources and may be more sensitive to dataset size compared with conventional CNN architectures.
 
 6. Potential Biases
 Geographic bias: data originates from specific regions where ENKTCL-NT prevalence differs.
@@ -182,11 +194,3 @@ All data were anonymized and used in compliance with institutional approvals.
 Explainability (SHAP & Grad-CAM) enhances transparency.
 Further testing in diverse clinical environments is required.
 Intended for research only, not for diagnostic decision-making.
-
-
-
-
-
-
-
-
